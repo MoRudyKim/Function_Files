@@ -96,7 +96,7 @@ mn_peakVolPlot <- function(data, Month, Hub) {
     ggtitle(label = paste0("Peak Annualized Volatility: ", Hub),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
+          plot.title = element_text(hjust = 0.5, size = 10),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
@@ -118,7 +118,7 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
     ggtitle(label = paste0("Off-Peak Annualized Volatility: ", Hub),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
+          plot.title = element_text(hjust = 0.5, size = 10),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
@@ -140,7 +140,7 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
             subtitle = paste0("Tenor: ", Quarter,"Q")) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
+          plot.title = element_text(hjust = 0.5, size = 10),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
@@ -161,7 +161,7 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
             subtitle = paste0("Tenor: ", Quarter,"Q")) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
+          plot.title = element_text(hjust = 0.5, size = 10),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
