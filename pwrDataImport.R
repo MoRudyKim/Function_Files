@@ -3,7 +3,7 @@ library(lubridate)
 library(tidyquant)
 library(gridExtra)
 
-setwd("P:\R_Dev\Price_Related")
+setwd("P:/R_Dev/Price_Related")
 
 # date <- Sys.Date() - 3
 # date <- format(as.Date(date), "%m%d%Y")
@@ -11,7 +11,7 @@ setwd("P:\R_Dev\Price_Related")
 # date <- format(as.Date(ifelse(lubridate::wday(Sys.Date() -1 ) == 1 |
 #                                 lubridate::wday(Sys.Date() -1 ) == 7 , "2099-12-31",Sys.Date() - 1)),"%m%d%Y")
 
-if(wday(Sys.Date() -1 %in% c(1,7))) {
+if(wday(Sys.Date()-1) %in% c(1,7)) {
   stop("Date you entered is a weekend date. Please manually adjust the curve date.")
 } else {
   date <- format(as.Date(Sys.Date() - 1), "%m%d%Y")

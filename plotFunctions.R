@@ -47,7 +47,6 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
 }
 
 qt_peakPrcPlot <- function(data, Quarter, Hub) {
-  require(tidyverse)
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(aes(colour = Hub),size = 1) +
     scale_x_date(date_breaks = "1 month") +

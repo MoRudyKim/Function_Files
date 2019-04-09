@@ -5,7 +5,6 @@ library(tidyquant)
 setwd("P:/R_Dev/Price_Related")
 
 monthlyPriceData <- function(data, Deliv_Month, pod) {
-  require(dplyr)
   tmp <- data %>%
     filter(Tenor == format(as.Date(Deliv_Month, "%Y-%m-%d")),
            POD == pod)
@@ -16,7 +15,6 @@ monthlyPriceData <- function(data, Deliv_Month, pod) {
 quarterlyPriceData <- function(data, Quarter, Hub) {
   require(tidyverse)
   tmp <- data %>%
-    group_by(Qtr, Stamp_Date) %>%
     filter(POD %in% Hub,
            Qtr == Quarter)
   tmp <- as.data.frame(tmp)
@@ -97,7 +95,6 @@ qt_peakReturnData <- function(quarterlypriceData) {
   require(tidyquant)
   
   retDt <- quarterlypriceData %>%
-    group_by(Qtr) %>%
     select(Stamp_Date, Qtr, aPeak) %>%
     tq_transmute(
       mutate_fun = periodReturn,
@@ -114,7 +111,6 @@ qt_offpeakReturnData <- function(quarterlyPriceData) {
   require(tidyverse)
   
   retDt <- quarterlyPriceData %>%
-    group_by(Qtr) %>%
     select(Stamp_Date, Qtr, aOffPeak) %>%
     tq_transmute(
       mutate_fun = periodReturn,
