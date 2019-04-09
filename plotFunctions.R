@@ -12,11 +12,12 @@ mn_peakPrcPlot <- function(data, Tenor, Hub) {
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
-          legend.justification = c("center","bottom"),
-          legend.position = c("bottom"),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
           # legend.text = element_text(size = 4),
-          legend.key.size = unit(0.25,"cm"),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 10)) +
     labs(colour = "") +
     ggtitle(label = paste0("Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
@@ -33,11 +34,12 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
-          legend.justification = c("center","bottom"),
-          legend.position = c("bottom"),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
           # legend.text = element_text(size = 4),
-          legend.key.size = unit(0.25,"cm"),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 10)) +
     labs(colour = "") +
     ggtitle(label = paste0("Off-Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
@@ -54,11 +56,12 @@ qt_peakPrcPlot <- function(data, Quarter, Hub) {
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
-          legend.justification = c("center","bottom"),
-          legend.position = c("bottom"),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
           # legend.text = element_text(size = 4),
-          legend.key.size = unit(0.25,"cm"),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 10)) +
     labs(colour = "") +
     ggtitle(label = paste0("Peak Price"), subtitle  = 
               paste0("Tenor: ",Quarter,"Q")) +
@@ -75,11 +78,12 @@ qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
-          legend.justification = c("center","bottom"),
-          legend.position = c("bottom"),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
           # legend.text = element_text(size = 4),
-          legend.key.size = unit(0.25,"cm"),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 10)) +
     labs(colour = "") +
     ggtitle(label = paste0("Off-Peak"), subtitle  = 
               paste0("Tenor: ",Quarter,"Q")) +
@@ -96,11 +100,11 @@ mn_peakVolPlot <- function(data, Month, Hub) {
     ggtitle(label = paste0("Peak"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5, size = 10),
+          plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 10),
           legend.position = "none") +
     labs(color = "") +
     #geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
@@ -118,11 +122,11 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
     ggtitle(label = paste0("Off-Peak"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5, size = 10),
+          plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 10),
           legend.position = "none") +
     labs(color = "") +
     #geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
@@ -140,11 +144,11 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
             subtitle = paste0("Tenor: ", Quarter,"Q")) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5, size = 10),
+          plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 10),
           legend.position = "none") +
     labs(color = "") +
     geom_smooth(method = "loess", formula = y ~ x)
@@ -161,11 +165,11 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
             subtitle = paste0("Tenor: ", Quarter,"Q")) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5, size = 10),
+          plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
           # legend.position = c(0.75,0.8),
           # legend.text = element_text(size = 5),
-          plot.subtitle = element_text(hjust = 0.5, size = 6.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 10),
           legend.position = "none") +
     labs(color = "") +
     geom_smooth(method = "loess", formula = y ~ x)
