@@ -93,7 +93,7 @@ mn_peakVolPlot <- function(data, Month, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Peak Annualized Volatility: ", Hub),subtitle = paste0("Tenor: ", Month)) +
+    ggtitle(label = paste0(Hub," Volatility"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5, size = 10),
@@ -115,7 +115,7 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Off-Peak Annualized Volatility: ", Hub),subtitle = paste0("Tenor: ", Month)) +
+    ggtitle(label = paste0(Hub, " Volatility"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "2 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5, size = 10),
