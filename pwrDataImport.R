@@ -50,12 +50,31 @@ dt <- dt %>%
 dt <- dt %>%
   mutate_at(vars(Time_Index,Wday), as.integer)
 
-dt <- rbind(dtm, dt)
-saveRDS(dt,"PowerCurves.rds")
-rm(dtm)
-
-dt <- dt%>%
+dt <- dt %>%
   group_by(Qtr, POD, Stamp_Date) %>%
   mutate(aPeak = mean(Peak, na.rm = TRUE),
          aOffPeak = mean(Offpeak, na.rm = TRUE))
 
+dt <- as.data.frame(dt)
+
+dt <- rbind(dtm, dt)
+dt <- as.data.frame(dt)
+saveRDS(dt,"PowerCurves.rds")
+rm(dtm)
+
+# colnames(dtm) <- c("Sys_Date", "Stamp_Date", "Time_Index",
+#                    "POD", "Tenor", "Peak","Offpeak")
+# dtm <- dtm %>%
+#   mutate_at(vars(Sys_Date, Stamp_Date, Tenor), data_convert)
+#   
+# dtm <- dtm %>%
+#   mutate(Qtr = quarter(Tenor, with_year = TRUE),
+#          Wday = wday(Stamp_Date))
+# 
+# dtm <- dtm %>%
+#   mutate_at(vars(Time_Index,Wday), as.integer)
+# 
+# dtm <- dtm %>%
+#   group_by(Qtr, POD, Stamp_Date) %>%
+#   mutate(aPeak = mean(Peak, na.rm = TRUE),
+#          aOffPeak = mean(Offpeak, na.rm = TRUE))
