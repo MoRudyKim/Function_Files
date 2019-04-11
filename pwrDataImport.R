@@ -23,13 +23,12 @@ curveDate <- function(vDate) {
    res <- format(vDate,"%m%d%Y")
    return(res)
  } else {
-   error = function(e) stop("Weekend Date")
+   res <- stop("Weekend Date")
  }
 }
   
 date <- curveDate(Sys.Date() -1)
-  
-  
+ 
 path <- "\\\\porfiler02\\RMShared\\Power Curves\\"
 dt <- read_csv(paste0(path,"PowerCurves_",date,".csv"))
 dt <- dt %>%
