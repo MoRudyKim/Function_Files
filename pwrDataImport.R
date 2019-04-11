@@ -11,11 +11,24 @@ setwd("P:/R_Dev/Price_Related")
 # date <- format(as.Date(ifelse(lubridate::wday(Sys.Date() -1 ) == 1 |
 #                                 lubridate::wday(Sys.Date() -1 ) == 7 , "2099-12-31",Sys.Date() - 1)),"%m%d%Y")
 
-if(wday(Sys.Date()-1) %in% c(1,7)) {
-  stop("Date you entered is a weekend date. Please manually adjust the curve date.")
-} else {
-  date <- format(as.Date(Sys.Date() - 1), "%m%d%Y")
+# if(wday(Sys.Date()-1) %in% c(1,7)) {
+#   stop("Date you entered is a weekend date. Please manually adjust the curve date.")
+# } else {
+#   date <- format(as.Date(Sys.Date() - 1), "%m%d%Y")
+#}
+
+curveDate <- function(vDate) {
+  vDate <- ymd(vDate)
+  if(wday(vDate) %in% c(2:6)) {
+   res <- format(vDate,"%m%d%Y")
+   return(res)
+ } else {
+   error = function(e) stop("Weekend Date")
+ }
 }
+  
+date <- curveDate(Sys.Date() -1)
+  
   
 path <- "\\\\porfiler02\\RMShared\\Power Curves\\"
 dt <- read_csv(paste0(path,"PowerCurves_",date,".csv"))
