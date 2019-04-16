@@ -18,15 +18,15 @@ setwd("P:/R_Dev/Price_Related")
 #}
 
 curveDate <- function(vDate) {
-  vDate <- ymd(vDate)
-  if(wday(vDate) %in% c(2:6)) {
-   res <- format(vDate,"%m%d%Y")
-   return(res)
- } else {
-   res <- stop("Weekend Date")
- }
+  if(wday(vDate) == 1) {
+    res <- format(vDate-2,"%m%d%Y")
+    return(res)
+  } else {
+    res <- format(vDate,"%m%d%Y")
+    return(res)
+  }
 }
-  
+
 date <- curveDate(Sys.Date() -1)
  
 path <- "\\\\porfiler02\\RMShared\\Power Curves\\"
