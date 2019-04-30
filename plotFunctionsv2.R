@@ -19,7 +19,7 @@ mn_peakPrcPlot <- function(data, Tenor, Hub) {
           legend.position = "none",
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
-    ggtitle(label = paste0("Peak Price"), subtitle  = 
+    ggtitle(label = paste0(Hub,":"," ",Tenor," Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
     
@@ -42,7 +42,7 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
           legend.position = "none",
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
-    ggtitle(label = paste0("Off-Peak Price"), subtitle  = 
+    ggtitle(label = paste0(Hub,":"," ",Tenor," Off-Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
   
@@ -64,7 +64,7 @@ qt_peakPrcPlot <- function(data, Quarter, Hub) {
           legend.position = "none",
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
-    ggtitle(label = paste0("Peak Price"), subtitle  = 
+    ggtitle(label = paste0(Hub," Peak Price: ", max(data$Stamp_Date)), subtitle  = 
               paste0("Tenor: ",Quarter)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
   
@@ -86,7 +86,7 @@ qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
           legend.position = "none",
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
-    ggtitle(label = paste0("Off-Peak"), subtitle  = 
+    ggtitle(label = paste0(Hub," Off-Peak Price: ", max(data$Stamp_Date)), subtitle  = 
               paste0("Tenor: ",Quarter)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
     
@@ -99,8 +99,8 @@ mn_peakVolPlot <- function(data, Month, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Peak"),subtitle = paste0("Tenor: ", Month)) +
-    scale_x_date(date_breaks = "2 month") +
+    ggtitle(label = paste0(Hub,":"," ","Peak Price Volatility"),subtitle = paste0("Tenor: ", Month)) +
+    scale_x_date(date_breaks = "1 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -121,8 +121,8 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Off-Peak"),subtitle = paste0("Tenor: ", Month)) +
-    scale_x_date(date_breaks = "2 month") +
+    ggtitle(label = paste0(Hub,":"," ","Off-Peak Price Volatility"),subtitle = paste0("Tenor: ", Month)) +
+    scale_x_date(date_breaks = "1 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -142,9 +142,9 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Peak"),
+    ggtitle(label = paste0(Hub," : ",Quarter, " Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
-    scale_x_date(date_breaks = "2 month") +
+    scale_x_date(date_breaks = "1 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -163,9 +163,9 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0("Off-Peak"),
+    ggtitle(label = paste0(Hub," : "," Off-Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
-    scale_x_date(date_breaks = "2 month") +
+    scale_x_date(date_breaks = "1 month") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -178,3 +178,54 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
   
   return(plot)
 }
+
+
+ondemandQtrPrcPlot <- function(data, time, hub, tou) {
+  tdt <- quarterlyPriceData(data, time, hub)
+  if(tou == 1) {
+    tmp_plot <- qt_peakPrcPlot(data = tdt, Quarter = vqtr, Hub = hub)
+  } else {
+    tmp_plot <- qt_offpeakPrcPlot(data = tdt, Quarter = vqtr, Hub = hub)
+  }
+}
+
+ondemandQtrVolPlot <- function(data, time, hub, tou) {
+  tdt <- quarterlyPriceData(data, time, hub)
+  if(tou == 1) {
+    rdt <- qt_peakReturnData(tdt)
+    vdt <- qt_peakVolData(rdt, 30, 252)
+    tmp_plot <- qt_peakVolPlot(vdt, vqtr, hub)
+    return(tmp_plot)
+  } else {
+    rdt <- qt_offpeakReturnData(tdt)
+    vdt <- qt_offpeakVolData(rdt, 30, 252)
+    tmp_plot <- qt_offpeakVolPlot(vdt, vqtr, hub)
+    return(tmp_plot)
+  }
+}
+
+ondemandMnPrcPlot <- function(data = dt, time, hub, tou) {
+  mdt <- monthlyPriceData(data, time, hub)
+  if(tou == 1) {
+    tmp_plot <- mn_peakPrcPlot(mdt, time, hub)
+  } else {
+    tmp_plot <- mn_offpeakPrcPlot(mdt, time, hub)
+  }
+}
+
+ondemandMnVolplot <- function(data = dt, time, hub, tou) {
+  mdt <- monthlyPriceData(data, time, hub)
+  if(tou ==1) {
+    rdt <- mn_peakReturnData(mdt)
+    vdt <- mn_peakVolData(rdt, 30, 252)
+    tmp_plot <- mn_peakVolPlot(vdt, time, hub)
+    return(tmp_plot)
+  } else {
+    rdt <- mn_OffpeakReturnData(mdt)
+    vdt <- mn_OffpeakVolData(rdt, 30, 252)
+    tmp_plot <- mn_offpeakVolPlot(vdt, time, hub)
+    return(tmp_plot)
+  }
+}
+
+

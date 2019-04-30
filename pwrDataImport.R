@@ -68,9 +68,14 @@ dt <- dt %>%
          aOffPeak = mean(Offpeak, na.rm = TRUE))
 
 dt <- as.data.frame(dt)
-
 dt <- rbind(dtm, dt)
 dt <- as.data.frame(dt)
+
+cutoff <- max(dt$Stamp_Date) - 275
+
+dt <- dt %>%
+  filter(Stamp_Date > cutoff)
+
 saveRDS(dt,"PowerCurves.rds")
 rm(dtm)
 
