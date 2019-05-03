@@ -7,7 +7,7 @@ setwd("P:/R_Dev/Price_Related")
 mn_peakPrcPlot <- function(data, Tenor, Hub) {
   require(tidyverse)
   plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = Peak)) + geom_line(aes(colour = Hub),size = 1) +
+    ggplot(aes(x = Stamp_Date, y = Peak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -30,7 +30,7 @@ mn_peakPrcPlot <- function(data, Tenor, Hub) {
 mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
   require(tidyverse)
   plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = Offpeak)) + geom_line(aes(colour = Hub),size = 1) +
+    ggplot(aes(x = Stamp_Date, y = Offpeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -52,7 +52,7 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
 qt_peakPrcPlot <- function(data, Quarter, Hub) {
  require(tidyverse)
   plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(aes(colour = Hub),size = 1) +
+    ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -74,7 +74,7 @@ qt_peakPrcPlot <- function(data, Quarter, Hub) {
 qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
   require(tidyverse)
   plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = aOffPeak)) + geom_line(aes(colour = Hub),size = 1) +
+    ggplot(aes(x = Stamp_Date, y = aOffPeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
