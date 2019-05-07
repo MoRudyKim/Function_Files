@@ -12,8 +12,8 @@ source(paste0(path,"ngDataClean.R"))
 source(paste0(path,"ngPlotFunctions.R"))
 
 vqtr <- 2019.3
-vmn <- "2019-06-01"
-vmn1 <- "2019-07-01"
+vmn <- "2019-07-01"
+vmn1 <- "2019-08-01"
 
 date <- curveDate(Sys.Date() -1)
 
