@@ -30,10 +30,11 @@ mn_peakReturnData <- function(mn_priceData) {
   retDt <- mn_priceData %>%
     select(Stamp_Date, Peak) %>%
     tq_transmute(
+      select = Peak,
       mutate_fun = periodReturn,
       period = "daily",
       type = "log") %>%
-    rename(peakReturn = daily.returns)
+    dplyr::rename(peakReturn = daily.returns)
   
   return(retDt)
 }
@@ -45,10 +46,11 @@ mn_OffpeakReturnData <- function(mn_priceData) {
   retDt <- mn_priceData %>%
     select(Stamp_Date,Offpeak) %>%
     tq_transmute(
+      select = Offpeak,
       mutate_fun = periodReturn,
       period = "daily",
       type = "log") %>%
-    rename(OffpeakReturn = daily.returns)
+    dplyr::rename(OffpeakReturn = daily.returns)
   
   return(retDt)
 }
@@ -99,11 +101,13 @@ qt_peakReturnData <- function(quarterlypriceData) {
   retDt <- quarterlypriceData %>%
     dplyr::group_by(Qtr) %>%
     select(Stamp_Date, Qtr, aPeak) %>%
+    distinct(Stamp_Date, .keep_all = TRUE) %>%
     tq_transmute(
+      select = aPeak,
       mutate_fun = periodReturn,
       period = "daily",
       type = "log") %>%
-    rename(peakReturn = daily.returns)
+    dplyr::rename(peakReturn = daily.returns)
   
   return(retDt)
   
@@ -117,10 +121,11 @@ qt_offpeakReturnData <- function(quarterlyPriceData) {
     dplyr::group_by(Qtr) %>%
     select(Stamp_Date, Qtr, aOffPeak) %>%
     tq_transmute(
+      select = aOffPeak,
       mutate_fun = periodReturn,
       period = "daily",
       type = "log") %>%
-    rename(offpeakReturn = daily.returns)
+    dplyr::rename(offpeakReturn = daily.returns)
   
   return(retDt)
   
