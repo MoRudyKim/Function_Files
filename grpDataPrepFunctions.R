@@ -172,6 +172,34 @@ qt_offpeakVolData <- function(qt_offpeakReturnData, numDays, numYrDays) {
 }
 
 
+xy_rollcor <- function(data, time, xhub, yhub, tou = 1) {
+  x_prc <- monthlyPriceData(data, time, xhub)
+  y_prc <- monthlyPriceData(data, time, yhub)
+  
+  if(tou == 1) {
+    x_ret <- mn_peakReturnData(x_prc)
+    y_ret <- mn_peakReturnData(y_prc)
+    xy_ret <- inner_join(x_ret, y_ret, by = "Stamp_Date") %>%
+      rename(xp = peakReturn.x, yp = peakReturn.y)
+  } else {
+    x_ret <- mn_OffpeakReturnData(x_prc)
+    y_ret <- mn_OffpeakReturnData(y_prc)
+    xy_ret <- inner_join(x_ret, y_ret, by = "Stamp_Date") %>%
+      rename(xp = OffpeakReturn.x, yp = OffpeakReturn.y)
+  }
+  
+  tmp <- xy_ret %>%
+    tq_mutate_xy(
+      x = xp,
+      y = yp,
+      mutate_fun = runCor,
+      n = 30, 
+      use = "pairwise.complete.obs",
+      col_rename = "rolling_cor") %>%
+    na.omit()
+  
+  return(tmp)
+}
 
 
 

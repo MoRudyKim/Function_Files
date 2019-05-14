@@ -17,7 +17,7 @@ vmn1 <- "2019-08-01"
 
 date <- curveDate(Sys.Date() -1)
 
-cutoff <- as.Date(format(as.Date(date, "%m%d%Y"),"%Y-%m-%d")) - 180
+cutoff <- as.Date(format(as.Date(date, "%m%d%Y"),"%Y-%m-%d")) - 275
 
 nym <- read_csv(paste0(path_f,"NYMEXCurves_",date,".csv"))
 basis <- read_csv(paste0(path_f,"NGBasisCurves_",date,".csv"))

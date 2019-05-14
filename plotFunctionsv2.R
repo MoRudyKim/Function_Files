@@ -228,4 +228,34 @@ ondemandMnVolplot <- function(data = dt, time, hub, tou) {
   }
 }
 
+xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
+  plot <- data %>%
+    ggplot(aes(x = Stamp_Date, y = rolling_cor)) +
+    geom_line(aes(color = "red"), size = 1) +
+    xlab("Time") + ylab("Correlation") +
+    ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
+            subtitle = paste0("Tenor: ", time)) +
+    scale_x_date(date_breaks = "1 week") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          # legend.justification = c(1,0),
+          # legend.position = c(0.75,0.8),
+          # legend.text = element_text(size = 5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "") +
+    geom_smooth(method = "loess", formula = y ~ x)
+  
+  return(plot)
+}
 
+ondemandRollCorPlot <- function(data, time, xhub, yhub, tou = "Peak") {
+  if(tou == "Peak") {
+    dt <- xy_rollcor(data, time, xhub, yhub, 1)
+    tmp_plot <- xy_rollcor_plot(dt, time, xhub, yhub, tou)
+  } else {
+    dt <- xy_rollcor(data, time, xhub, yhub, 0)
+    tmp_plot <- xy_rollcor_plot(dt, time, xhub, yhub, tou = "OffPeak")
+  }
+  return(tmp_plot)
+}

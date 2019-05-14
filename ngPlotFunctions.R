@@ -50,13 +50,13 @@ volPlot <- function(data, time, Hub) {
 }
 
 ondemandMnPrcPlot <- function(data,time, hub) {
-  mdt <- monthlyPriceData(data, time, hub)
+  mdt <- ngmonthlyPriceData(data, time, hub)
   tmp_plot <- mn_price_plot(mdt, time, hub)
   return(tmp_plot)
 }
 
 ondemandMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
-  mdt <- monthlyPriceData(data, time, hub)
+  mdt <- ngmonthlyPriceData(data, time, hub)
   vdt <- mn_volData(mdt, numDays, numYrDays)
   tmp_plot <- volPlot(vdt,time,hub)
   return(tmp_plot)
@@ -64,13 +64,13 @@ ondemandMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
 
 
 ondemandQtrPrcPlot <- function(data, Quarter, Hub) {
-  qdt <- quarterlyPriceData(data, Quarter, Hub)
+  qdt <- ngquarterlyPriceData(data, Quarter, Hub)
   tmp_plot <- qt_price_plot(qdt, Quarter, Hub)
   return(tmp_plot)
 }
 
 ondemandQtrVolPlot <- function(data, time, hub, numDays, numYrDays) {
-  qdt <- quarterlyPriceData(data, time, hub)
+  qdt <- ngquarterlyPriceData(data, time, hub)
   vdt <- qt_VolData(qdt,numDays, numYrDays)
   tmp_plot <- volPlot(vdt, time, hub)
   return(tmp_plot)

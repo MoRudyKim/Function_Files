@@ -17,8 +17,8 @@ curveDate <- function(vDate) {
 
 date <- curveDate(Sys.Date() -1)
  
-path <- "\\\\porfiler02\\RMShared\\Power Curves\\"
-dt <- read_csv(paste0(path,"PowerCurves_",date,".csv"))
+path_p <- "\\\\porfiler02\\RMShared\\Power Curves\\"
+dt <- read_csv(paste0(path_p,"PowerCurves_",date,".csv"))
 dt <- as.data.frame(dt)
 
 names(dt) <- c("Sys_Date", "Stamp_Date", "Time_Index",

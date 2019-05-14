@@ -49,7 +49,7 @@ fullPriceTab <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
   return(tmp)
 }
 
-monthlyPriceData <- function(Data, Deliv_Month, Hub) {
+ngmonthlyPriceData <- function(Data, Deliv_Month, Hub) {
   require(tidyverse)
   tmp <- Data %>%
     filter(CTM == format(as.Date(Deliv_Month, "%Y-%m-%d")),
@@ -58,7 +58,7 @@ monthlyPriceData <- function(Data, Deliv_Month, Hub) {
   return(tmp)
 }
 
-quarterlyPriceData <- function(data, Quarter, Hub) {
+ngquarterlyPriceData <- function(data, Quarter, Hub) {
   require(tidyverse)
   tmp <- data %>%
     dplyr::group_by(Price_Date, Qtr) %>%
@@ -69,7 +69,7 @@ quarterlyPriceData <- function(data, Quarter, Hub) {
   return(tmp)
 }
 
-mn_ReturnData <- function(mn_priceData) {
+ngmn_ReturnData <- function(mn_priceData) {
   require(tidyquant)
   require(tidyverse)
   
@@ -84,7 +84,7 @@ mn_ReturnData <- function(mn_priceData) {
   return(retDt)
 }
 
-mn_volData <- function(Data, numDays, numYrDays) {
+ngmn_volData <- function(Data, numDays, numYrDays) {
   require(tidyverse)
   require(tidyquant)
   tmp <- mn_ReturnData(Data)
@@ -104,7 +104,7 @@ mn_volData <- function(Data, numDays, numYrDays) {
 }
 
 
-qt_ReturnData <- function(qt_priceData) {
+ngqt_ReturnData <- function(qt_priceData) {
   require(tidyquant)
   require(tidyverse)
   
@@ -119,7 +119,7 @@ qt_ReturnData <- function(qt_priceData) {
   return(retDt)
 }
 
-qt_VolData <- function(data, numDays, numYrDays) {
+ngqt_VolData <- function(data, numDays, numYrDays) {
   require(tidyquant)
   require(tidyverse)
   
