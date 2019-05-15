@@ -57,7 +57,7 @@ ondemandMnPrcPlot <- function(data,time, hub) {
 
 ondemandMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
   mdt <- ngmonthlyPriceData(data, time, hub)
-  vdt <- mn_volData(mdt, numDays, numYrDays)
+  vdt <- ngmn_volData(mdt, numDays, numYrDays)
   tmp_plot <- volPlot(vdt,time,hub)
   return(tmp_plot)
 }
@@ -71,7 +71,7 @@ ondemandQtrPrcPlot <- function(data, Quarter, Hub) {
 
 ondemandQtrVolPlot <- function(data, time, hub, numDays, numYrDays) {
   qdt <- ngquarterlyPriceData(data, time, hub)
-  vdt <- qt_VolData(qdt,numDays, numYrDays)
+  vdt <- ngqt_VolData(qdt,numDays, numYrDays)
   tmp_plot <- volPlot(vdt, time, hub)
   return(tmp_plot)
 }

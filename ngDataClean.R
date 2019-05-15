@@ -87,7 +87,7 @@ ngmn_ReturnData <- function(mn_priceData) {
 ngmn_volData <- function(Data, numDays, numYrDays) {
   require(tidyverse)
   require(tidyquant)
-  tmp <- mn_ReturnData(Data)
+  tmp <- ngmn_ReturnData(Data)
   Vol <- tmp %>%
     tq_mutate(
       select = Return,
@@ -123,7 +123,7 @@ ngqt_VolData <- function(data, numDays, numYrDays) {
   require(tidyquant)
   require(tidyverse)
   
-  tmp <- qt_ReturnData(data)
+  tmp <- ngqt_ReturnData(data)
   vdt <- tmp %>%
     tq_mutate(
       select = Return,
