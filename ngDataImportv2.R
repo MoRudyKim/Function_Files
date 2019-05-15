@@ -38,7 +38,7 @@ allin <- fullPriceTab(nym, basis)
 
 hub_list <- unique(allin$Comp)
 
-rm(list = ls()[!ls() %in% c("allin","hub_list","date","cutoff","path")])
+rm(list = ls()[!ls() %in% c("allin","hub_list","date","cutoff","path","dt")])
 
 
 

@@ -4,6 +4,8 @@ library(tidyquant)
 
 setwd("P:/R_Dev/Price_Related")
 
+# Monthly Price and Vol Plots
+
 mn_peakPrcPlot <- function(data, Tenor, Hub) {
   require(tidyverse)
   plot <- data %>%
@@ -22,7 +24,7 @@ mn_peakPrcPlot <- function(data, Tenor, Hub) {
     ggtitle(label = paste0(Hub,":"," ",Tenor," Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
-    
+  
   
   return(plot)
 }
@@ -45,51 +47,6 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
     ggtitle(label = paste0(Hub,":"," ",Tenor," Off-Peak Price"), subtitle  = 
               paste0("Tenor: ",Tenor)) +
     geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
-  
-  return(plot)
-}
-
-qt_peakPrcPlot <- function(data, Quarter, Hub) {
- require(tidyverse)
-  plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(color = "red",size = 1) +
-    scale_x_date(date_breaks = "1 month") +
-    xlab("Time") + ylab("$/MWh") +
-    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
-          # legend.justification = c("center","bottom"),
-          # legend.position = c("bottom"),
-          # legend.text = element_text(size = 4),
-          # legend.key.size = unit(0.25,"cm"),
-          legend.position = "none",
-          plot.subtitle = element_text(hjust = 0.5, size = 9)) +
-    labs(colour = "") +
-    ggtitle(label = paste0(Hub," Peak Price: ", max(data$Stamp_Date)), subtitle  = 
-              paste0("Tenor: ",Quarter)) +
-    geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
-  
-  return(plot)
-}
-
-qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
-  require(tidyverse)
-  plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = aOffPeak)) + geom_line(color = "red",size = 1) +
-    scale_x_date(date_breaks = "1 month") +
-    xlab("Time") + ylab("$/MWh") +
-    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
-          # legend.justification = c("center","bottom"),
-          # legend.position = c("bottom"),
-          # legend.text = element_text(size = 4),
-          # legend.key.size = unit(0.25,"cm"),
-          legend.position = "none",
-          plot.subtitle = element_text(hjust = 0.5, size = 9)) +
-    labs(colour = "") +
-    ggtitle(label = paste0(Hub," Off-Peak Price: ", max(data$Stamp_Date)), subtitle  = 
-              paste0("Tenor: ",Quarter)) +
-    geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
-    
   
   return(plot)
 }
@@ -137,6 +94,55 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
   return(plot)
 }
 
+# Quarterly Price and Vol Plots
+
+qt_peakPrcPlot <- function(data, Quarter, Hub) {
+  require(tidyverse)
+  plot <- data %>%
+    ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(color = "red",size = 1) +
+    scale_x_date(date_breaks = "1 month") +
+    xlab("Time") + ylab("$/MWh") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
+          # legend.text = element_text(size = 4),
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 9)) +
+    labs(colour = "") +
+    ggtitle(label = paste0(Hub," Peak Price: ", max(data$Stamp_Date)), subtitle  = 
+              paste0("Tenor: ",Quarter)) +
+    geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
+  
+  return(plot)
+}
+
+qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
+  require(tidyverse)
+  plot <- data %>%
+    ggplot(aes(x = Stamp_Date, y = aOffPeak)) + geom_line(color = "red",size = 1) +
+    scale_x_date(date_breaks = "1 month") +
+    xlab("Time") + ylab("$/MWh") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          # legend.justification = c("center","bottom"),
+          # legend.position = c("bottom"),
+          # legend.text = element_text(size = 4),
+          # legend.key.size = unit(0.25,"cm"),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 9)) +
+    labs(colour = "") +
+    ggtitle(label = paste0(Hub," Off-Peak Price: ", max(data$Stamp_Date)), subtitle  = 
+              paste0("Tenor: ",Quarter)) +
+    geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"))
+  
+  
+  return(plot)
+}
+
+
+
 qt_peakVolPlot <- function(data, Quarter, Hub) {
   require(tidyverse)
   plot <- data %>%
@@ -179,6 +185,101 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
   return(plot)
 }
 
+# Correlation Plots
+
+xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
+  plot <- data %>%
+    ggplot(aes(x = Stamp_Date, y = rolling_cor)) +
+    geom_line(aes(color = "red"), size = 1) +
+    xlab("Time") + ylab("Correlation") +
+    ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
+            subtitle = paste0("Tenor: ", time)) +
+    scale_x_date(date_breaks = "1 week") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          # legend.justification = c(1,0),
+          # legend.position = c(0.75,0.8),
+          # legend.text = element_text(size = 5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "") +
+    geom_smooth(method = "loess", formula = y ~ x)
+  
+  return(plot)
+}
+
+# Heat Rate Plots
+
+hr_plot <- function(data, powerhub, gashub, time) {
+  plot <- data %>%
+    ggplot() +
+    geom_line(aes(x = Stamp_Date, y = impHR_peak), color = "blue", size = 1.5) +
+    geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
+    scale_x_date(date_breaks = "1 week") +
+    xlab("Tenor") + ylab("Implied Heat Rate") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          legend.position = "none",
+          plot.subtitle = element_text(hjust = 0.5, size = 9)) +
+    labs(colour = "") +
+    ggtitle(label = paste0(powerhub,"--",gashub,":"," "," Imp Heat Rate"), subtitle  = 
+              paste0("Tenor: ",time," ","<Blue = Peak, Red = Offpeak>"))
+  
+  return(plot)
+}
+
+
+# Price and Heat Rate Change Plots
+
+f <- function(y) seq(floor(min(y)), ceiling(max(y)))
+
+changePlot <- function(data) {
+  tmp_plot <- data %>%
+    ggplot() +
+    geom_line(aes(x = Tenor, y = peakChg), size = 1.5, color = "blue") +
+    geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
+    scale_x_date(date_breaks = "2 month") +
+    scale_y_continuous(labels = scales::dollar) +
+    theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          legend.justification = c(1,0),
+          legend.position = "bottom",
+          legend.text = element_text(size = 5),
+          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+    labs(colour = "") +
+    ggtitle(label = paste0(data$POD," ", "Price Curve Change: ",
+                           pdate," to ",cdate),
+            subtitle = "Blue Line = Peak, Red Line = Off Peak") +
+    ylab("Price Changes") + xlab("Delivery Month")
+  
+  return(tmp_plot)
+  
+}
+
+hrchangePlot <- function(data) {
+  tmp_plot <- data %>%
+    ggplot() +
+    geom_line(aes(x = Tenor, y = peakimphrchg), size = 1.5, color = "blue") +
+    geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
+    scale_x_date(date_breaks = "2 month") +
+    #scale_y_continuous(breaks = f) +
+    theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          legend.justification = c(1,0),
+          legend.position = "bottom",
+          legend.text = element_text(size = 5),
+          plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+    labs(colour = "") +
+    ggtitle(label = paste0(data$POD," -- ",data$Comp," :", "Imp. HR Change: ",
+                           pdate," to ",cdate),
+            subtitle = "Blue Line = Peak, Red Line = Off Peak") +
+    ylab("Implied Heat Rate Changes") + xlab("Delivery Month")
+  
+  return(tmp_plot)
+  
+}
+
+# On-Demand Plot Functions
 
 ondemandQtrPrcPlot <- function(data, time, hub, tou) {
   tdt <- quarterlyPriceData(data, time, hub)
@@ -228,26 +329,7 @@ ondemandMnVolplot <- function(data = dt, time, hub, tou) {
   }
 }
 
-xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
-  plot <- data %>%
-    ggplot(aes(x = Stamp_Date, y = rolling_cor)) +
-    geom_line(aes(color = "red"), size = 1) +
-    xlab("Time") + ylab("Correlation") +
-    ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
-            subtitle = paste0("Tenor: ", time)) +
-    scale_x_date(date_breaks = "1 week") +
-    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
-          plot.title = element_text(hjust = 0.5),
-          # legend.justification = c(1,0),
-          # legend.position = c(0.75,0.8),
-          # legend.text = element_text(size = 5),
-          plot.subtitle = element_text(hjust = 0.5, size = 9),
-          legend.position = "none") +
-    labs(color = "") +
-    geom_smooth(method = "loess", formula = y ~ x)
-  
-  return(plot)
-}
+
 
 ondemandRollCorPlot <- function(data, time, xhub, yhub, tou = "Peak") {
   if(tou == "Peak") {
@@ -259,3 +341,29 @@ ondemandRollCorPlot <- function(data, time, xhub, yhub, tou = "Peak") {
   }
   return(tmp_plot)
 }
+
+ondemandPlot <- function(data = dt, hub, current_date = cdate, prior_date = pdate) {
+  cur <- prcDt(data = data, hub = hub, date = current_date)
+  prior <- prcDt(data = data, hub = hub, date = prior_date)
+  prc_dt <- graphData(cur, prior)
+  prc_plot <- changePlot(prc_dt)
+  
+  return(prc_plot)
+  
+}
+
+ondemandhrchg_plot <- function(powerdata, gasdata,powerhub,gashub,date1, date2) {
+  t1 <- hrdt(dt,allin, powerhub,gashub)
+  t2 <- hrgraphdata(t1,powerhub, current_date,prior_date)
+  plot <- hrchangePlot(t2)
+  return(plot)
+}
+
+ondemandhrplot <- function(powerdata = dt,gasdata = allin, powerhub,gashub,time = vmn) {
+  tmp <- hrdt(powerdata,gasdata,powerhub,gashub) %>%
+    filter(Tenor == time)
+  plot <- hr_plot(tmp,powerhub,gashub, time)
+  
+  return(plot)
+}
+
