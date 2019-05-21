@@ -4,6 +4,7 @@ library(tidyquant)
 
 setwd("P:/R_Dev/Price_Related")
 
+f <- function(y) seq(floor(min(y)), ceiling(max(y)))
 # Monthly Price and Vol Plots
 
 mn_peakPrcPlot <- function(data, Tenor, Hub) {
@@ -216,6 +217,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
     geom_line(aes(x = Stamp_Date, y = impHR_peak), color = "blue", size = 1.5) +
     geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
     scale_x_date(date_breaks = "1 week") +
+    scale_y_continuous(breaks = round(seq(min(data$impHR_offpeak),max(data$impHR_peak),2),0)) +
     xlab("Tenor") + ylab("Implied Heat Rate") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -231,7 +233,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
 
 # Price and Heat Rate Change Plots
 
-f <- function(y) seq(floor(min(y)), ceiling(max(y)))
+
 
 changePlot <- function(data) {
   tmp_plot <- data %>%
@@ -262,7 +264,7 @@ hrchangePlot <- function(data) {
     geom_line(aes(x = Tenor, y = peakimphrchg), size = 1.5, color = "blue") +
     geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
-    #scale_y_continuous(breaks = f) +
+    scale_y_continuous(breaks = round(seq(min(offpeakimphrchg),max(peakimphchg),1),0)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           legend.justification = c(1,0),
