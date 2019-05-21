@@ -49,6 +49,20 @@ fullPriceTab <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
   return(tmp)
 }
 
+fullPriceTab_nym <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
+  tmp <- inner_join(Nymex, Basis, by = Jcond) %>%
+    select(CTM, Comp, Price_Date, Price.x, Qtr.x, wday.x, Price.y) %>%
+    rename(nymPrice = Price.x,
+           Qtr = Qtr.x,
+           wday = wday.x,
+           basisPrice = Price.y) %>%
+    group_by(CTM, Price_Date) %>%
+    mutate(fullPrice = nymPrice) %>%
+    filter(Price_Date <= format(as.Date(date,"%m%d%Y"),"%Y-%m-%d")) %>%
+    mutate(Comp = "NYMEX")
+  return(tmp)
+}
+
 ngmonthlyPriceData <- function(Data, Deliv_Month, Hub) {
   require(tidyverse)
   tmp <- Data %>%

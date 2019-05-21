@@ -7,8 +7,8 @@ rmSome <- function(type, env = globalenv(), negate = FALSE) {
 }
 
 
-rmSome(is.ggplot)
-rmSome(is.data.frame,negate = TRUE)
+# rmSome(is.ggplot)
+# rmSome(is.data.frame,negate = TRUE)
 
 
 

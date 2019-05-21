@@ -49,13 +49,45 @@ volPlot <- function(data, time, Hub) {
   return(plot)
 }
 
-ondemandMnPrcPlot <- function(data,time, hub) {
+nymPlot <- function(data, curvedate = cdate) {
+  plot <- data %>%
+    filter(Price_Date == as.Date(cdate)) %>%
+    ggplot(aes(x = CTM, y = fullPrice)) + geom_line(color = "blue", size = 1.5) +
+    xlab("Delivery Month") + ylab("$/MMBtu") +
+    ggtitle(label = paste0("NYMEX Price Curve"), subtitle = paste0("As of: ", curvedate)) +
+    scale_x_date(date_breaks = "2 month") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "")
+  
+  return(plot)
+}
+
+nymTimePlot <- function(data, current_date, prior_date) {
+  plot <- data %>%
+    ggplot() +
+    geom_line(aes(x = CTM, y = Current_Price), color = "blue", size = 1.25) +
+    geom_line(aes(x = CTM, y = Prior_Price), color = "red", size = 1.25) +
+    xlab("Delivery Month") + ylab("$/MMBtu") +
+    ggtitle(label = paste0("NYMEX Price Curve"," As of ",cdate," and ",pdate), 
+            subtitle = paste0("Blue Line = Current Date"," and ","Red Line = Prior Date")) +
+    scale_x_date(date_breaks = "2 month") +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "")
+}
+
+ondemandNgMnPrcPlot <- function(data,time, hub) {
   mdt <- ngmonthlyPriceData(data, time, hub)
   tmp_plot <- mn_price_plot(mdt, time, hub)
   return(tmp_plot)
 }
 
-ondemandMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
+ondemandNgMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
   mdt <- ngmonthlyPriceData(data, time, hub)
   vdt <- ngmn_volData(mdt, numDays, numYrDays)
   tmp_plot <- volPlot(vdt,time,hub)
@@ -63,22 +95,22 @@ ondemandMnVolPlot <- function(data,time,hub, numDays, numYrDays) {
 }
 
 
-ondemandQtrPrcPlot <- function(data, Quarter, Hub) {
+ondemandNgQtrPrcPlot <- function(data, Quarter, Hub) {
   qdt <- ngquarterlyPriceData(data, Quarter, Hub)
   tmp_plot <- qt_price_plot(qdt, Quarter, Hub)
   return(tmp_plot)
 }
 
-ondemandQtrVolPlot <- function(data, time, hub, numDays, numYrDays) {
+ondemandNgQtrVolPlot <- function(data, time, hub, numDays, numYrDays) {
   qdt <- ngquarterlyPriceData(data, time, hub)
   vdt <- ngqt_VolData(qdt,numDays, numYrDays)
   tmp_plot <- volPlot(vdt, time, hub)
   return(tmp_plot)
 }
 
-
-
-
-
-
-
+ondemandNymexPlot <- function(data, current_date, prior_date) {
+  tmp <- nymCtmData(data, current_date, prior_date)
+  plot <- nymTimePlot(tmp, current_date, prior_date)
+  
+  return(plot)
+}

@@ -352,8 +352,8 @@ ondemandPlot <- function(data = dt, hub, current_date = cdate, prior_date = pdat
   
 }
 
-ondemandhrchg_plot <- function(powerdata, gasdata,powerhub,gashub,date1, date2) {
-  t1 <- hrdt(dt,allin, powerhub,gashub)
+ondemandhrchg_plot <- function(powerdata, gasdata,powerhub,gashub,date1=current_date, date2= prior_date) {
+  t1 <- hrdt(powerdata,gasdata, powerhub,gashub)
   t2 <- hrgraphdata(t1,powerhub, current_date,prior_date)
   plot <- hrchangePlot(t2)
   return(plot)
