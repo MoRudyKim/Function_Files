@@ -9,6 +9,7 @@ mn_price_plot <- function(data, time, hub) {
     xlab("Time") + ylab("$/MMBtu") +
     ggtitle(label = paste0(hub,": ","Price Trends"), subtitle = paste0("Tenor: ",time)) +
     scale_x_date(date_breaks = "1 week") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, size = 9),
@@ -24,6 +25,7 @@ qt_price_plot <- function(data, time, hub) {
     xlab("Time") + ylab("$/MMBtu") +
     ggtitle(label = paste0(hub,": ","Price Trends"), subtitle = paste0("Tenor: ",time)) +
     scale_x_date(date_breaks = "1 week") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, size = 9),
@@ -39,6 +41,7 @@ volPlot <- function(data, time, Hub) {
     xlab("Time") + ylab("Annualized Volatility (%)") +
     ggtitle(label = paste0(Hub,":"," ","Price Volatility"),subtitle = paste0("Tenor: ", time)) +
     scale_x_date(date_breaks = "1 week") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, size = 9),
@@ -56,6 +59,7 @@ nymPlot <- function(data, curvedate = cdate) {
     xlab("Delivery Month") + ylab("$/MMBtu") +
     ggtitle(label = paste0("NYMEX Price Curve"), subtitle = paste0("As of: ", curvedate)) +
     scale_x_date(date_breaks = "2 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, size = 9),
@@ -71,9 +75,10 @@ nymTimePlot <- function(data, current_date, prior_date) {
     geom_line(aes(x = CTM, y = Current_Price), color = "blue", size = 1.25) +
     geom_line(aes(x = CTM, y = Prior_Price), color = "red", size = 1.25) +
     xlab("Delivery Month") + ylab("$/MMBtu") +
-    ggtitle(label = paste0("NYMEX Price Curve"," As of ",cdate," and ",pdate), 
+    ggtitle(label = paste0("NYMEX Price Curve"," As of ",current_date," and ",prior_date), 
             subtitle = paste0("Blue Line = Current Date"," and ","Red Line = Prior Date")) +
     scale_x_date(date_breaks = "2 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, size = 9),

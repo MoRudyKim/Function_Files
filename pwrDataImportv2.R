@@ -3,7 +3,6 @@ library(lubridate)
 library(tidyquant)
 library(gridExtra)
 
-setwd("P:/R_Dev/Price_Related")
 
 curveDate <- function(vDate) {
   if(wday(vDate) == 1) {

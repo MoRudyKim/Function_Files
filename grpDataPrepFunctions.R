@@ -2,7 +2,6 @@ library(tidyverse)
 library(lubridate)
 library(tidyquant)
 
-setwd("P:/R_Dev/Price_Related")
 
 monthlyPriceData <- function(data, Deliv_Month, pod) {
   require(tidyverse)

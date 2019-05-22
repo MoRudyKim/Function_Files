@@ -2,8 +2,6 @@ library(tidyverse)
 library(lubridate)
 library(tidyquant)
 
-setwd("P:/R_Dev/Price_Related")
-
 f <- function(y) seq(floor(min(y)), ceiling(max(y)))
 # Monthly Price and Vol Plots
 
@@ -12,6 +10,7 @@ mn_peakPrcPlot <- function(data, Tenor, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = Peak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -35,6 +34,7 @@ mn_offpeakPrcPlot <- function(data, Tenor, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = Offpeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -59,6 +59,7 @@ mn_peakVolPlot <- function(data, Month, Hub) {
     xlab("Time") + ylab("Annualized Volatility (%)") +
     ggtitle(label = paste0(Hub,":"," ","Peak Price Volatility"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -81,6 +82,7 @@ mn_offpeakVolPlot <- function(data, Month, Hub) {
     xlab("Time") + ylab("Annualized Volatility (%)") +
     ggtitle(label = paste0(Hub,":"," ","Off-Peak Price Volatility"),subtitle = paste0("Tenor: ", Month)) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -102,6 +104,7 @@ qt_peakPrcPlot <- function(data, Quarter, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = aPeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -124,6 +127,7 @@ qt_offpeakPrcPlot <- function(data, Quarter, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = aOffPeak)) + geom_line(color = "red",size = 1) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     xlab("Time") + ylab("$/MWh") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -152,6 +156,7 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
     ggtitle(label = paste0(Hub," : ",Quarter, " Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -173,6 +178,7 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
     ggtitle(label = paste0(Hub," : "," Off-Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
     scale_x_date(date_breaks = "1 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -196,6 +202,7 @@ xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
     ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
             subtitle = paste0("Tenor: ", time)) +
     scale_x_date(date_breaks = "1 week") +
+    scale_y_continuous(breaks = round(seq(-1, 1, 0.1),2)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -217,7 +224,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
     geom_line(aes(x = Stamp_Date, y = impHR_peak), color = "blue", size = 1.5) +
     geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
     scale_x_date(date_breaks = "1 week") +
-    scale_y_continuous(breaks = round(seq(min(data$impHR_offpeak),max(data$impHR_peak),2),0)) +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     xlab("Tenor") + ylab("Implied Heat Rate") +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -241,7 +248,7 @@ changePlot <- function(data) {
     geom_line(aes(x = Tenor, y = peakChg), size = 1.5, color = "blue") +
     geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
-    scale_y_continuous(labels = scales::dollar) +
+    scale_y_continuous(labels = scales::dollar, breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           legend.justification = c(1,0),
@@ -259,12 +266,16 @@ changePlot <- function(data) {
 }
 
 hrchangePlot <- function(data) {
+#   f1 <- min(data$offpeakimphrchg,na.rm = TRUE)
+#   f2 <- max(data$peakimphrchg, na.rm = TRUE)
+#   fn <- length(data$Stamp_Date)/10
+#   fb <- (abs(f1) + abs(f2))/fn
   tmp_plot <- data %>%
     ggplot() +
     geom_line(aes(x = Tenor, y = peakimphrchg), size = 1.5, color = "blue") +
     geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
-    scale_y_continuous(breaks = round(seq(min(offpeakimphrchg),max(peakimphchg),1),0)) +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           legend.justification = c(1,0),

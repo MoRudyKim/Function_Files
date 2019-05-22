@@ -3,7 +3,7 @@ library(lubridate)
 library(tidyquant)
 
 #path <- "P:/R_Dev/Price_Related/Price_Change_Functions/"
-setwd("P:/R_Dev/Price_Related")
+
 
 prcDt <- function(data, hub, date) {
   tmp <- data %>%
