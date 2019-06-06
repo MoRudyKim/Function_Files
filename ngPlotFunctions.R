@@ -86,6 +86,41 @@ nymTimePlot <- function(data, current_date, prior_date) {
     labs(color = "")
 }
 
+gasChangePlot <- function(data, hub, date1, date2) {
+  plot <- data %>%
+    ggplot() +
+    geom_line(aes(x = CTM, y = Price_Change), color = "blue", size = 1.250) +
+    xlab("Delivery Month") + ylab("$/MMBtu") + 
+    ggtitle(label = paste0(hub," Price Curve Change"," from ",date2," to ",date1)) +
+    scale_x_date(date_breaks = "2 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "")
+}
+
+gasBasisPlot <- function(data, hub1, hub2, date1) {
+  plot <- data %>% 
+    ggplot() +
+    geom_line(aes(x = CTM, y = Hub1_Price), color = "blue", size = 1.25) +
+    geom_line(aes(x = CTM, y = Hub2_Price), color = "red", size = 1.25) +
+    geom_line(aes(x = CTM, y = Locational_Basis), color = "black", size = 1.5) +
+    xlab("Contract Month") + ylab("Basis vs. Henry Hub, $/MMBtu") +
+    ggtitle(label = paste0(hub1," vs. ",hub2," -- ","As of: ",date1),
+            subtitle = paste0("Blue = ",hub1," | ","Red = ",hub2,
+                              " | ","Black = Locational Basis")) + 
+    scale_x_date(date_breaks = "2 month") +
+    scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
+    theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5, size = 9),
+          legend.position = "none") +
+    labs(color = "")
+}         
+
+
 ondemandNgMnPrcPlot <- function(data,time, hub) {
   mdt <- ngmonthlyPriceData(data, time, hub)
   tmp_plot <- mn_price_plot(mdt, time, hub)
@@ -117,5 +152,17 @@ ondemandNymexPlot <- function(data, current_date, prior_date) {
   tmp <- nymCtmData(data, current_date, prior_date)
   plot <- nymTimePlot(tmp, current_date, prior_date)
   
+  return(plot)
+}
+
+ondemandGasChangePlot <- function(data, hub, date1 = current_date, date2 = prior_date) {
+  tmp <- gasData(data, hub, date1, date2)
+  plot <- gasChangePlot(tmp, hub, date1, date2)
+  return(plot)
+}
+
+ondemandGasBasisPairPlot <- function(data, hub1, hub2, date) {
+  tmp <- gasBasisPairData(data, hub1, hub2, date)
+  plot <- gasBasisPlot(tmp, hub1, hub2, date)
   return(plot)
 }

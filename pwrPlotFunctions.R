@@ -202,7 +202,7 @@ xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
     ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
             subtitle = paste0("Tenor: ", time)) +
     scale_x_date(date_breaks = "1 week") +
-    scale_y_continuous(breaks = round(seq(-1, 1, 0.1),2)) +
+    scale_y_continuous(breaks = scales::pretty_breaks(n=15)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
           # legend.justification = c(1,0),
@@ -222,7 +222,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
   plot <- data %>%
     ggplot() +
     geom_line(aes(x = Stamp_Date, y = impHR_peak), color = "blue", size = 1.5) +
-    geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
+    #geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
     scale_x_date(date_breaks = "1 week") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     xlab("Tenor") + ylab("Implied Heat Rate") +
@@ -246,7 +246,7 @@ changePlot <- function(data) {
   tmp_plot <- data %>%
     ggplot() +
     geom_line(aes(x = Tenor, y = peakChg), size = 1.5, color = "blue") +
-    geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
+    #geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
     scale_y_continuous(labels = scales::dollar, breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -273,7 +273,7 @@ hrchangePlot <- function(data) {
   tmp_plot <- data %>%
     ggplot() +
     geom_line(aes(x = Tenor, y = peakimphrchg), size = 1.5, color = "blue") +
-    geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
+    #geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),

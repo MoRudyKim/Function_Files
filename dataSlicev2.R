@@ -132,4 +132,57 @@ nymCtmData <- function(data, current_date, prior_date) {
 }
 
 
-    
+gasData <- function(data, hub, date1, date2) {
+ 
+    t1 <- data %>%
+      filter(Price_Date == date1,
+             Comp == hub)
+    t2 <- data %>%
+      filter(Price_Date == date2,
+             Comp == hub)
+    t3 <- inner_join(t1,t2, by = "CTM") %>%
+      rename(Comp = Comp.x,
+             Current_Date = Price_Date.x,
+             Current_Price = fullPrice.x,
+             Prior_Date = Price_Date.y,
+             Prior_Price = fullPrice.y) %>%
+      select(CTM, Comp, Current_Date, Current_Price, Prior_Date, Prior_Price)  %>%
+      mutate(Price_Change = Current_Price - Prior_Price)
+    return(t3)
+}
+
+gasBasisData <- function(data, hub, date1, date2) {
+  t1 <- data %>%
+    filter(Price_Date == date1,
+           Comp == hub)
+  t2 <- data %>%
+    filter(Price_Date == date2,
+           Comp == hub)
+  t3 <- inner_join(t1,t2, by = "CTM") %>%
+    rename(Comp = Comp.x,
+           Current_Date = Price_Date.x,
+           Current_Price = basisPrice.x,
+           Prior_Date = Price_Date.y,
+           Prior_Price = basisPrice.y) %>%
+    select(CTM, Comp, Current_Date, Current_Price, Prior_Date, Prior_Price)  %>%
+    mutate(Price_Change = Current_Price - Prior_Price)
+  return(t3)
+}
+
+gasBasisPairData <- function(data, hub1, hub2, curve_date) {
+  t1 <- data %>%
+    filter(Price_Date == curve_date,
+           Comp == hub1)
+  t2 <- data %>%
+    filter(Price_Date == curve_date,
+           Comp == hub2)
+  t3 <- inner_join(t1,t2, by = c("CTM")) %>%
+    rename(Hub1 = Comp.x,
+           Current_Date = Price_Date.x,
+           Hub1_Price = basisPrice.x,
+           Hub2 = Comp.y,
+           Hub2_Price = basisPrice.y) %>%
+    select(CTM, Hub1, Hub2, Current_Date, Hub1_Price, Hub2_Price)  %>%
+    mutate(Locational_Basis = Hub1_Price - Hub2_Price)
+  return(t3)
+}
