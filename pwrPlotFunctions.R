@@ -222,7 +222,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
   plot <- data %>%
     ggplot() +
     geom_line(aes(x = Stamp_Date, y = impHR_peak), color = "blue", size = 1.5) +
-    #geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
+    geom_line(aes(x = Stamp_Date, y = impHR_offpeak), color = "red", size = 1.5) +
     scale_x_date(date_breaks = "1 week") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     xlab("Tenor") + ylab("Implied Heat Rate") +
@@ -232,7 +232,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
     ggtitle(label = paste0(powerhub,"--",gashub,":"," "," Imp Heat Rate"), subtitle  = 
-              paste0("Tenor: ",time," ","<Blue = Peak, Red = Offpeak>"))
+              paste0("Tenor: ",time," ","<Blue = Peak, Red = Offpeak>")) 
   
   return(plot)
 }
@@ -246,7 +246,7 @@ changePlot <- function(data) {
   tmp_plot <- data %>%
     ggplot() +
     geom_line(aes(x = Tenor, y = peakChg), size = 1.5, color = "blue") +
-    #geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
+    geom_line(aes(x = Tenor, y = offpeakChg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
     scale_y_continuous(labels = scales::dollar, breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -273,7 +273,7 @@ hrchangePlot <- function(data) {
   tmp_plot <- data %>%
     ggplot() +
     geom_line(aes(x = Tenor, y = peakimphrchg), size = 1.5, color = "blue") +
-    #geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
+    geom_line(aes(x = Tenor, y = offpeakimphrchg), size = 1.5, color = "red") +
     scale_x_date(date_breaks = "2 month") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
     theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
@@ -291,6 +291,45 @@ hrchangePlot <- function(data) {
   return(tmp_plot)
   
 }
+
+spreadPlot <- function(data, DelivMonth, Hubx, Huby, TOU) {
+  t <- spreadData(data, DelivMonth, Hubx, Huby)
+  if(TOU == "Peak") {
+    plot <- ggplot(t, aes(x = Price_Date, y = peakSpread)) + 
+      geom_line(color = "blue", size = 1.25) +
+      scale_x_date(date_breaks = "1 month") +
+      scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
+      theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
+            plot.title = element_text(hjust = 0.5),
+            legend.justification = c(1,0),
+            legend.position = "bottom",
+            legend.text = element_text(size = 5),
+            plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+      labs(colour = "") +
+      ggtitle(label = paste0(Hubx," vs. ",Huby," Peak Spread"),
+              subtitle = paste0("Delivery Month: ", DelivMonth)) +
+      ylab("Spread ($/MWh)") + xlab("Delivery Month") +
+      geom_smooth(method = "loess", formula = y ~ x)
+  } else {
+    plot <- ggplot(t, aes(x = Price_Date, y = offpeakSpread)) + geom_line(color = "red", size = 1.25) +
+      scale_x_date(date_breaks = "1 month") +
+      scale_y_continuous(breaks = scales::pretty_breaks(n = 15)) +
+      theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 0.95, vjust = 0.2),
+            plot.title = element_text(hjust = 0.5),
+            legend.justification = c(1,0),
+            legend.position = "bottom",
+            legend.text = element_text(size = 5),
+            plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
+      labs(colour = "") +
+      ggtitle(label = paste0(Hubx," vs. ",Huby," Peak Spread"),
+              subtitle = paste0("Delivery Month: ", DelivMonth)) +
+      ylab("Spread ($/MWh)") + xlab("Delivery Month") +
+      geom_smooth(method = "loess", formula = y ~ x)
+  }
+  return(plot)
+}
+
+
 
 # On-Demand Plot Functions
 

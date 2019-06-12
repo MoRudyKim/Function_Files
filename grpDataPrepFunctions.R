@@ -200,6 +200,20 @@ xy_rollcor <- function(data, time, xhub, yhub, tou = 1) {
   return(tmp)
 }
 
+spreadData <- function(data, DelivMonth, Hubx, Huby, TOU = "Peak") {
+  t1 <- data %>%
+    filter(POD == Hubx,
+           Tenor == DelivMonth)
+  t2 <- data %>%
+    filter(POD == Huby,
+           Tenor == DelivMonth)
+  t3 <- inner_join(t1,t2, by = c("Stamp_Date", "Tenor", "Time_Index")) %>%
+    rename(Price_Date = Stamp_Date) %>%
+    mutate(peakSpread = Peak.x - Peak.y,
+           offpeakSpread = Offpeak.x - Offpeak.y)
+  return(t3)
+}
+
 
 
 
