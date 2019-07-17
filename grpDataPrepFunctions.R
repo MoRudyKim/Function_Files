@@ -213,23 +213,3 @@ spreadData <- function(data, DelivMonth, Hubx, Huby, TOU = "Peak") {
            offpeakSpread = Offpeak.x - Offpeak.y)
   return(t3)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

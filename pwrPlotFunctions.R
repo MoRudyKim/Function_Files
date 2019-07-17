@@ -153,7 +153,7 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
   plot <- data %>%
     ggplot(aes(x = Stamp_Date, y = vol)) + geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Annualized Volatility (%)") +
-    ggtitle(label = paste0(Hub," : ",Quarter, " Peak Volatility"),
+    ggtitle(label = paste0(Hub," : ", " Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
     scale_x_date(date_breaks = "1 month") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
@@ -308,7 +308,7 @@ spreadPlot <- function(data, DelivMonth, Hubx, Huby, TOU) {
       labs(colour = "") +
       ggtitle(label = paste0(Hubx," vs. ",Huby," Peak Spread"),
               subtitle = paste0("Delivery Month: ", DelivMonth)) +
-      ylab("Spread ($/MWh)") + xlab("Delivery Month") +
+      ylab("Spread ($/MWh)") + xlab("Time") +
       geom_smooth(method = "loess", formula = y ~ x)
   } else {
     plot <- ggplot(t, aes(x = Price_Date, y = offpeakSpread)) + geom_line(color = "red", size = 1.25) +
@@ -323,12 +323,11 @@ spreadPlot <- function(data, DelivMonth, Hubx, Huby, TOU) {
       labs(colour = "") +
       ggtitle(label = paste0(Hubx," vs. ",Huby," Peak Spread"),
               subtitle = paste0("Delivery Month: ", DelivMonth)) +
-      ylab("Spread ($/MWh)") + xlab("Delivery Month") +
+      ylab("Spread ($/MWh)") + xlab("Time") +
       geom_smooth(method = "loess", formula = y ~ x)
   }
   return(plot)
 }
-
 
 
 # On-Demand Plot Functions
