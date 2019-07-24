@@ -155,7 +155,7 @@ qt_peakVolPlot <- function(data, Quarter, Hub) {
     xlab("Time") + ylab("Annualized Volatility (%)") +
     ggtitle(label = paste0(Hub," : ", " Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
-    scale_x_date(date_breaks = "1 month") +
+    scale_x_date(date_breaks = "2 weeks") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -177,7 +177,7 @@ qt_offpeakVolPlot <- function(data, Quarter, Hub) {
     xlab("Time") + ylab("Annualized Volatility (%)") +
     ggtitle(label = paste0(Hub," : "," Off-Peak Volatility"),
             subtitle = paste0("Tenor: ", Quarter)) +
-    scale_x_date(date_breaks = "1 month") +
+    scale_x_date(date_breaks = "2 weeks") +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
     theme(axis.text.x = element_text(size = 7, angle = 90, hjust = 0.95, vjust = 0.2),
           plot.title = element_text(hjust = 0.5),
@@ -199,7 +199,7 @@ xy_rollcor_plot <- function(data, time, xhub, yhub, tou = "Peak") {
     ggplot(aes(x = Stamp_Date, y = rolling_cor)) +
     geom_line(aes(color = "red"), size = 1) +
     xlab("Time") + ylab("Correlation") +
-    ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Correlation"),
+    ggtitle(label = paste0(xhub," : ",yhub," -- ",tou," 30-Day Rolling Cor."),
             subtitle = paste0("Tenor: ", time)) +
     scale_x_date(date_breaks = "1 week") +
     scale_y_continuous(breaks = scales::pretty_breaks(n=15)) +
@@ -231,7 +231,7 @@ hr_plot <- function(data, powerhub, gashub, time) {
           legend.position = "none",
           plot.subtitle = element_text(hjust = 0.5, size = 9)) +
     labs(colour = "") +
-    ggtitle(label = paste0(powerhub,"--",gashub,":"," "," Imp Heat Rate"), subtitle  = 
+    ggtitle(label = paste0(powerhub," : ",gashub,":"," "," Imp Heat Rate"), subtitle  = 
               paste0("Tenor: ",time," ","<Blue = Peak, Red = Offpeak>")) 
   
   return(plot)
@@ -256,7 +256,7 @@ changePlot <- function(data) {
           legend.text = element_text(size = 5),
           plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
     labs(colour = "") +
-    ggtitle(label = paste0(data$POD," ", "Price Curve Change: ",
+    ggtitle(label = paste0(data$HUB," ", "Price Curve Change: ",
                            pdate," to ",cdate),
             subtitle = "Blue Line = Peak, Red Line = Off Peak") +
     ylab("Price Changes") + xlab("Delivery Month")

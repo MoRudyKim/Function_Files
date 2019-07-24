@@ -23,6 +23,9 @@ dt <- as.data.frame(dt)
 names(dt) <- c("Sys_Date", "Stamp_Date", "Time_Index",
                "POD", "Tenor", "Peak","Offpeak")
 
+tpath <- "P:/R_Dev/Price_Related"
+tmptab <- read_csv(paste0(tpath,"/","pw_lkup.csv"))
+
 data_convert <- function(x) {
   date_con <- as.Date(x, format = "%d-%b-%y")
   date_con
@@ -53,3 +56,8 @@ cutoff <- max(dt$Stamp_Date) - 180
 dt <- dt %>%
   filter(Stamp_Date > cutoff)
 
+dt <- left_join(dt, tmptab, by = "POD")
+
+dt <- as.data.frame(dt)
+
+rm(tmptab, tpath, path_p)

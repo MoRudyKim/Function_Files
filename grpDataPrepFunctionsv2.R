@@ -202,10 +202,10 @@ xy_rollcor <- function(data, time, xhub, yhub, tou = 1) {
 
 spreadData <- function(data, DelivMonth, Hubx, Huby, TOU = "Peak") {
   t1 <- data %>%
-    filter(POD == Hubx,
+    filter(HUB == Hubx,
            Tenor == DelivMonth)
   t2 <- data %>%
-    filter(POD == Huby,
+    filter(HUB == Huby,
            Tenor == DelivMonth)
   t3 <- inner_join(t1,t2, by = c("Stamp_Date", "Tenor", "Time_Index")) %>%
     rename(Price_Date = Stamp_Date) %>%
