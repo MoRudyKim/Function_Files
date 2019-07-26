@@ -37,7 +37,7 @@ data_clean <- function(data) {
 
 fullPriceTab <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
   tmp <- inner_join(Nymex, Basis, by = Jcond) %>%
-    select(CTM, Comp, Location, Price_Date, Price.x, Qtr.x, wday.x, Price.y) %>%
+    select(CTM, Price_Date, Comp,Price_Date, Price.x, Qtr.x, wday.x, Price.y) %>%
     rename(nymPrice = Price.x,
            Qtr = Qtr.x,
            wday = wday.x,
@@ -51,7 +51,7 @@ fullPriceTab <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
 
 fullPriceTab_nym <- function(Nymex, Basis, Jcond = c("CTM", "Price_Date")) {
   tmp <- inner_join(Nymex, Basis, by = Jcond) %>%
-    select(CTM, Comp, Location, Price_Date, Price.x, Qtr.x, wday.x, Price.y) %>%
+    select(CTM, Price_Date, Comp, Price.x, Qtr.x, wday.x, Price.y) %>%
     rename(nymPrice = Price.x,
            Qtr = Qtr.x,
            wday = wday.x,

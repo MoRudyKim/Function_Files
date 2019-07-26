@@ -8,7 +8,7 @@ path <- "P:/R_Dev/Price_Related/Function_Files/"
 path_f <- "\\\\porfiler02\\RMShared\\NG_Curves\\"
 path3 <-  "P:/R_Dev/Price_Related/Output_Files/"
 
-source(paste0(path,"ngDataClean.R"))
+source(paste0(path,"ngDataCleanv3.R"))
 
 date <- curveDate(Sys.Date() -1)
 cutoff <- as.Date(format(as.Date(date, "%m%d%Y"),"%Y-%m-%d")) - 180
@@ -30,16 +30,13 @@ nym <- nym %>%
 basis <- basis %>%
   filter(Price_Date >= cutoff)
 
+tmptab <- read_csv("ng_lkup.csv")
+tmpnames <- c("CTM", "Price_Date", "Comp","nymPrice", "Qtr", "wday", "basisPrice",
+              "fullPrice", "Location")
 allin <- fullPriceTab(nym, basis)
 allinnym <- fullPriceTab_nym(nym,basis)
-
-tmptab <- read_csv("ng_lkup.csv")
-
-tmpnames <- c("CTM", "Comp", "Price_Date", "nymPrice", "Qtr", "wday", "basisPrice",
-                  "fullPrice", "Location")
-
-
 allin <- left_join(allin, tmptab, by = "Comp")
+
 names(allin) <- tmpnames
 allin <- as.data.frame(allin)
 hub_list <- unique(allin$Location)

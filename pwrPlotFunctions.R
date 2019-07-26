@@ -283,7 +283,7 @@ hrchangePlot <- function(data) {
           legend.text = element_text(size = 5),
           plot.subtitle = element_text(hjust = 0.5, size = 6.5)) +
     labs(colour = "") +
-    ggtitle(label = paste0(data$POD," -- ",data$Comp," :", "Imp. HR Change: ",
+    ggtitle(label = paste0(data$HUB," -- ",data$Location," :", "Imp. HR Change: ",
                            pdate," to ",cdate),
             subtitle = "Blue Line = Peak, Red Line = Off Peak") +
     ylab("Implied Heat Rate Changes") + xlab("Delivery Month")

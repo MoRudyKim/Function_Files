@@ -4,7 +4,6 @@ library(tidyquant)
 
 #path <- "P:/R_Dev/Price_Related/Price_Change_Functions/"
 
-
 prcDt <- function(data, hub, date) {
   tmp <- data %>%
     filter(HUB == hub) %>%
@@ -76,7 +75,7 @@ hrdt <- function(powerdata, gasdata, powerhub, gashub) {
   t1 <- pwdt(powerdata, powerhub)
   t2 <- ngdt(gasdata,gashub)
   tmp <- inner_join(t1,t2, by = c("Tenor","Stamp_Date")) %>%
-    select(Stamp_Date, location, Comp, Tenor, Peak, Offpeak, Qtr.x, Wday, fullPrice) %>%
+    select(Stamp_Date, HUB,Location, Comp, Tenor, Peak, Offpeak, Qtr.x, Wday, fullPrice) %>%
     rename(Qtr = Qtr.x) %>%
     mutate(impHR_peak = Peak/fullPrice,
            impHR_offpeak = Offpeak/fullPrice)
@@ -89,8 +88,8 @@ hrgraphdata <- function(data, powerhub, current_date,prior_date) {
   t2 <- prcDt(data, powerhub, prior_date)
   t3 <- left_join(t1,t2, by = "Tenor") %>%
     rename(Stamp_Date = Stamp_Date.x,
-           POD = POD.x,
-           Comp = Comp.x,
+           HUB = HUB.x,
+           Location = Location.x,
            Peak_cur = Peak.x,
            Peak_pr = Peak.y,
            Offpeak_cur = Offpeak.x,
@@ -103,7 +102,7 @@ hrgraphdata <- function(data, powerhub, current_date,prior_date) {
            offpeakimphr_pr = impHR_offpeak.y,
            Qtr = Qtr.x, 
            wday = Wday.x) %>%
-    select(Stamp_Date, POD, Comp, Tenor, Peak_cur, Offpeak_cur,
+    select(Stamp_Date, HUB, Location, Tenor, Peak_cur, Offpeak_cur,
            Qtr, wday, fullPrice_cur, peakimphr_cur,peakimphr_pr,Peak_pr, Offpeak_pr,
            fullPrice_pr, offpeakimphr_cur,offpeakimphr_pr)
   tmp <- t3 %>%
