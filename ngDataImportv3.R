@@ -36,9 +36,12 @@ tmpnames <- c("CTM", "Price_Date", "Comp","nymPrice", "Qtr", "wday", "basisPrice
 allin <- fullPriceTab(nym, basis)
 allinnym <- fullPriceTab_nym(nym,basis)
 allin <- left_join(allin, tmptab, by = "Comp")
+allin <- left_join(allinnym, tmptab, by = "Comp")
 
 names(allin) <- tmpnames
+names(allin) <- tmpnames
 allin <- as.data.frame(allin)
+allinnym <- as.data.frame(allinnym)
 hub_list <- unique(allin$Location)
 
 rm(tmptab, tmpnames)
