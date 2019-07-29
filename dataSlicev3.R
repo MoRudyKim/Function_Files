@@ -121,7 +121,7 @@ nymCtmData <- function(data, current_date, prior_date) {
   t2 <- data %>%
     filter(Price_Date == prior_date)
   t3 <- inner_join(t1, t2, by = "CTM") %>%
-    rename(Location = Location.x,
+    rename(Comp = Comp.x,
            Current_Date = Price_Date.x,
            Current_Price = nymPrice.x,
            Prior_Date = Price_Date.y,
