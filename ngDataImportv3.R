@@ -11,10 +11,12 @@ path3 <-  "P:/R_Dev/Price_Related/Output_Files/"
 source(paste0(path,"ngDataCleanv3.R"))
 
 date <- curveDate(Sys.Date() -1)
-cutoff <- as.Date(format(as.Date(date, "%m%d%Y"),"%Y-%m-%d")) - 180
+cutoff <- as.Date(format(as.Date(date, "%m%d%Y"),"%Y-%m-%d")) - 365
 
-nym <- read_csv(paste0(path_f,"NYMEXCurves_",date,".csv"))
-basis <- read_csv(paste0(path_f,"NGBasisCurves_",date,".csv"))
+# nym <- read_csv(paste0(path_f,"NYMEXCurves_",date,".csv"))
+# basis <- read_csv(paste0(path_f,"NGBasisCurves_",date,".csv"))
+nym <- read_csv(paste0(path_f,"NYMEXCurves",".csv"))
+basis <- read_csv(paste0(path_f,"NGBasisCurves",".csv"))
 
 names(nym) <- c("CTM", "Price_Date", "Price")
 names(basis) <- c("CTM", "Price_Date", "Price","Comp")
