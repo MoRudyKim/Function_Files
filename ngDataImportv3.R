@@ -3,7 +3,7 @@ library(lubridate)
 library(tidyquant)
 library(gridExtra)
 
-setwd("P:/R_Dev/Price_Related")
+#setwd("P:/R_Dev/Price_Related")
 path <- "P:/R_Dev/Price_Related/Function_Files/"
 path_f <- "\\\\porfiler02\\RMShared\\NG_Curves\\"
 path3 <-  "P:/R_Dev/Price_Related/Output_Files/"
